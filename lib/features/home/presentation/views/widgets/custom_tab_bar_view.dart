@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomTabBarView extends StatelessWidget {
@@ -22,4 +21,3 @@ class CustomTabBarView extends StatelessWidget {
     );
   }
 }
-

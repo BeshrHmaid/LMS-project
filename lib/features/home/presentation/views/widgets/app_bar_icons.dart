@@ -13,35 +13,38 @@ class UserOptionsIcons extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.terminal,color: Colors.white),
+          icon: const Icon(Icons.terminal, color: Colors.white),
         ),
         const SizedBox(
           width: 7,
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.phone_android,color: Colors.white),
+          icon: const Icon(Icons.phone_android, color: Colors.white),
         ),
         const SizedBox(
           width: 7,
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.notifications_none,color: Colors.white),
+          icon: const Icon(Icons.notifications_none, color: Colors.white),
         ),
         const SizedBox(
           width: 7,
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.settings,color: Colors.white),
+          icon: const Icon(Icons.settings, color: Colors.white),
         ),
         const SizedBox(
           width: 7,
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.question_mark_outlined,color: Colors.white,),
+          icon: const Icon(
+            Icons.question_mark_outlined,
+            color: Colors.white,
+          ),
         ),
         UserNameIcon()
       ],

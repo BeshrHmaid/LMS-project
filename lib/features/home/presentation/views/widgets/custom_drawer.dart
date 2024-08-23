@@ -141,21 +141,27 @@ class CustomExpandedDrawer extends StatelessWidget {
                     // Navigate to Copilot
                   },
                 ),
-                userRole == 'ROLE_ADMIN' ?
-                ListTile(
-                  title:  Row(
-                    children: [
-                      Image.asset(AssetsData.rolesIcon,height: 30,width: 30,),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Text('Roles and permissions'),
-                    ],
-                  ),
-                  onTap: () {
-                    GoRouter.of(context).push(AppRouter.kRolesAndPermissionView);
-                  },
-                ):Container(),
+                userRole == 'ROLE_ADMIN'
+                    ? ListTile(
+                        title: Row(
+                          children: [
+                            Image.asset(
+                              AssetsData.rolesIcon,
+                              height: 30,
+                              width: 30,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Text('Roles and permissions'),
+                          ],
+                        ),
+                        onTap: () {
+                          GoRouter.of(context)
+                              .push(AppRouter.kRolesAndPermissionView);
+                        },
+                      )
+                    : Container(),
                 ListTile(
                   title: const Row(
                     children: [
@@ -247,13 +253,14 @@ class CustomCollapsedDrawer extends StatelessWidget {
                     // Navigate to Market Place
                   },
                 ),
-                userRole == 'ROLE_ADMIN' ?
-                ListTile(
-                  title: Image.asset(AssetsData.rolesIcon),
-                  onTap: () {
-                    // Navigate to Copilot
-                  },
-                ):Container(),
+                userRole == 'ROLE_ADMIN'
+                    ? ListTile(
+                        title: Image.asset(AssetsData.rolesIcon),
+                        onTap: () {
+                          // Navigate to Copilot
+                        },
+                      )
+                    : Container(),
                 ListTile(
                   title: const Icon(FontAwesomeIcons.wrench),
                   onTap: () {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lms/features/roles_and_premission/data/models/role_model.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lms/core/functions/show_snack_bar.dart';
+import 'package:lms/features/roles_and_premission/data/models/authority.dart';
+import 'package:lms/features/roles_and_premission/presentation/manager/authoriy_cubit/authority_cubit.dart';
 
 class AddNewRoleViewBody extends StatefulWidget {
   const AddNewRoleViewBody({super.key});
@@ -11,13 +13,18 @@ class AddNewRoleViewBody extends StatefulWidget {
 
 class _AddNewRoleViewBodyState extends State<AddNewRoleViewBody> {
   final TextEditingController _roleController = TextEditingController();
-final List<Role> _roles = [];
+  final List<Authority> _roles = [];
 
   void _addRole() {
     final roleName = _roleController.text.trim();
     if (roleName.isNotEmpty) {
       setState(() {
-        _roles.add(Role(name: roleName));
+        _roles.add(Authority(
+            authority: roleName,
+            description: '',
+            id: 1,
+            permissionIds: [],
+            userIds: []));
       });
       _roleController.clear();
     }
@@ -53,7 +60,7 @@ final List<Role> _roles = [];
               itemBuilder: (context, index) {
                 final role = _roles[index];
                 return ListTile(
-                  title: Text(role.name),
+                  title: Text(role.authority!),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
@@ -67,19 +74,25 @@ final List<Role> _roles = [];
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              // Handle bulk roles addition logic
-              // Example: print the added roles to the console
-              for (var role in _roles) {
-                print('Role: ${role.name}');
+          BlocConsumer<AuthorityCubit, AuthorityState>(
+            listener: (context, state) {
+              if (state is AuthorityStateFailure) {
+                showSnackBar(context, state.errorMessage, Colors.red);
+              } else if (state is AddAuthorityStateSuccess) {
+                showSnackBar(context, '${_roles.length} authorities added successfully', Colors.green);
               }
-              // Clear the list after processing
-              setState(() {
-                _roles.clear();
-              });
             },
-            child: const Text('Add Roles'),
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: () async {
+                  for(Authority role in _roles){
+                    print(role.authority);
+                  }
+                  await context.read<AuthorityCubit>().addAuthorities(_roles);
+                },
+                child: const Text('Add Roles'),
+              );
+            },
           ),
         ],
       ),

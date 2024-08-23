@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:lms/features/roles_and_premission/data/models/authority.dart';
+import 'package:lms/features/roles_and_premission/presentation/views/roles_and_permission_dashboard_view.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/actions_container.dart';
 
 class UpdateRolesViewBody extends StatelessWidget {
   const UpdateRolesViewBody({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: 36.0),
+    return  Padding(
+      padding:const EdgeInsets.only(left: 36.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RoleNameDropdown(
               title: 'select role',
+              authorities: authorities,
             ),
-            SizedBox(height: 16.0),
-            Text(
+           const SizedBox(height: 16.0),
+          const  Text(
               'Permissions',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16.0),
-            PermissionDropdown(
+          const  SizedBox(height: 16.0),
+         const   PermissionDropdown(
               title: 'Manage Organization',
             ),
-            PermissionDropdown(
+           const PermissionDropdown(
               title: 'Manage Developer Settings',
             ),
-            PermissionDropdown(
+           const PermissionDropdown(
               title: 'Manage Counterparties',
             ),
-            PermissionDropdown(
+           const PermissionDropdown(
               title: 'Manage External Accounts',
             ),
-            PermissionDropdown(
+           const PermissionDropdown(
               title: 'Manage API Keys',
             ),
-            PermissionDropdown(
+        const    PermissionDropdown(
               title: 'Manage Ledgers',
             ),
-
-            const SizedBox(height: 30,),
-            Row(
+            const SizedBox(
+              height: 30,
+            ),
+          const  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
@@ -125,22 +128,23 @@ class _PermissionDropdownState extends State<PermissionDropdown> {
 }
 
 class RoleNameDropdown extends StatefulWidget {
+  final List<Authority> authorities;
   final String title;
 
-  const RoleNameDropdown({super.key, required this.title});
+  const RoleNameDropdown({super.key, required this.authorities, required this.title});
 
   @override
   _RoleNameDropdownState createState() => _RoleNameDropdownState();
 }
 
 class _RoleNameDropdownState extends State<RoleNameDropdown> {
-  String _selectedRole = 'Role1';
-  final List<String> _roles = [
-    'Role1', // Include 'Role1' in the list
-    'Role2',
-    'Role3',
-    'Role4'
-  ];
+  late String _selectedRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedRole = widget.authorities[0].authority ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +156,7 @@ class _RoleNameDropdownState extends State<RoleNameDropdown> {
             width: 200, // Adjust this width as needed
             child: Text(
               widget.title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(width: 16.0),
@@ -166,10 +170,10 @@ class _RoleNameDropdownState extends State<RoleNameDropdown> {
                   _selectedRole = newValue!;
                 });
               },
-              items: _roles.map<DropdownMenuItem<String>>((String value) {
+              items: widget.authorities.map<DropdownMenuItem<String>>((Authority value) {
                 return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+                  value: value.authority,
+                  child: Text(value.authority ?? ''),
                 );
               }).toList(),
             ),

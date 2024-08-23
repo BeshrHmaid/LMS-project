@@ -54,8 +54,8 @@ class User {
       'password': password,
       'phone': phone,
       'email': email,
-     'enabled': true,
-      "authorityIDs":[1],
+      'enabled': true,
+      "authorityIDs": [1],
     };
   }
 

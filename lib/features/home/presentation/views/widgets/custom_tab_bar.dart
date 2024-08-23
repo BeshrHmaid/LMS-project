@@ -16,8 +16,7 @@ class CustomTabBar extends StatelessWidget {
       child: TabBar(
         controller: _tabController,
         labelColor: Colors.black,
-        indicatorColor:
-            const Color.fromARGB(255, 4, 128, 163),
+        indicatorColor: const Color.fromARGB(255, 4, 128, 163),
         unselectedLabelColor: Colors.grey,
         dividerColor: Colors.transparent,
         tabs: const [
@@ -25,7 +24,9 @@ class CustomTabBar extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FontAwesomeIcons.user),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text('Users'),
               ],
             ),
@@ -34,7 +35,9 @@ class CustomTabBar extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FontAwesomeIcons.peopleGroup),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text('Teams'),
               ],
             ),
@@ -43,7 +46,9 @@ class CustomTabBar extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FontAwesomeIcons.creditCard),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text('Subscription'),
               ],
             ),
@@ -52,7 +57,9 @@ class CustomTabBar extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FontAwesomeIcons.bookOpen),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text('Learn'),
               ],
             ),
@@ -62,5 +69,3 @@ class CustomTabBar extends StatelessWidget {
     );
   }
 }
-
-

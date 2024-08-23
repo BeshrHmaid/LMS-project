@@ -4,9 +4,10 @@ import 'package:lms/features/auth/domain/use_case/login_use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_in_state.dart';
-var userRole='';
-class SignInCubit extends Cubit<SignInState> {
 
+var userRole = '';
+
+class SignInCubit extends Cubit<SignInState> {
   SignInCubit(
     this.loginUseCase,
   ) : super(SignInInitial());
@@ -21,7 +22,6 @@ class SignInCubit extends Cubit<SignInState> {
         emit(SignInFailure(failure.message));
       },
       (result) {
-        
         emit(
           // SignInSuccess(
           //   result['jwtToken'], result['username'], result['roles']));

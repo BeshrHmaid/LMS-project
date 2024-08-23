@@ -15,11 +15,15 @@ class PaymentViewBody extends StatelessWidget {
       child: Column(
         children: [
           const CustomAppBar(),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 10,),
+              const SizedBox(
+                width: 10,
+              ),
               Expanded(
                 flex: 1,
                 child: Align(
@@ -102,7 +106,9 @@ class PaymentViewBody extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(flex: 1, child: Container()), // Empty container to balance the layout
+              Expanded(
+                  flex: 1,
+                  child: Container()), // Empty container to balance the layout
             ],
           ),
         ],

@@ -47,13 +47,17 @@ class LicenseModel {
       productName: json['productName'],
       userName: json['userName'],
       usageLimit: json['usageLimit'],
-      renewalDate: json['renewalDate'] != null ? DateTime.parse(json['renewalDate']) : null,
+      renewalDate: json['renewalDate'] != null
+          ? DateTime.parse(json['renewalDate'])
+          : null,
       licenseType: json['licenseType'],
       licenseTerms: json['licenseTerms'],
       supportLevel: json['supportLevel'],
       cost: json['cost'].toDouble(),
       renewalCost: json['renewalCost'].toDouble(),
-      activationDate: json['activationDate'] != null ? DateTime.parse(json['activationDate']) : null,
+      activationDate: json['activationDate'] != null
+          ? DateTime.parse(json['activationDate'])
+          : null,
       notes: json['notes'],
       autoRenewalStatus: json['autoRenewalStatus'],
     );

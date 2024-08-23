@@ -74,7 +74,8 @@ class _HomeViewBodyState extends State<HomeViewBody>
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SingleChildScrollView( // Add SingleChildScrollView here
+                    child: SingleChildScrollView(
+                      // Add SingleChildScrollView here
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -133,7 +134,9 @@ class _HomeViewBodyState extends State<HomeViewBody>
                                       'Share training for the Microsoft 365 app for iOS or Android.'),
                             ],
                           ),
-                          const SizedBox(height: 30,),
+                          const SizedBox(
+                            height: 30,
+                          ),
                           const Text(
                             'Your organization',
                             style: Styles.textStyle20,
@@ -143,8 +146,10 @@ class _HomeViewBodyState extends State<HomeViewBody>
                           ),
                           CustomTabBar(tabController: _tabController),
                           SizedBox(
-                            height: 400, // Add a fixed height for the TabBarView
-                            child: CustomTabBarView(tabController: _tabController),
+                            height:
+                                400, // Add a fixed height for the TabBarView
+                            child:
+                                CustomTabBarView(tabController: _tabController),
                           ),
                         ],
                       ),

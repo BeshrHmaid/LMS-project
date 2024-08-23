@@ -43,11 +43,11 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kUpdateRoleView,
-        builder: (context, state) => const UpdateRolesView(),
+       builder: (context, state) =>  UpdateRolesView(),
       ),
       GoRoute(
         path: kManageRolesView,
-        builder: (context, state) => const ManageRolesView(),
+        builder: (context, state) =>  ManageRolesView(),
       ),
       GoRoute(
         path: kHomeView,

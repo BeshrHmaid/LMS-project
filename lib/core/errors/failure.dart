@@ -36,25 +36,24 @@ class ServerFailure extends Failure {
     String errorMessage = ''; // Default message
     print(errorMessage);
     if (response.data is Map<String, dynamic>) {
-      errorMessage = response.data['message'] ?? errorMessage;}
-    else if (response.data is String) {
+      errorMessage = response.data['message'] ?? errorMessage;
+    } else if (response.data is String) {
       errorMessage = response.data;
     }
 
-
     return ServerFailure(errorMessage);
-  //   if (statusCode == 404) {
-  //     return ServerFailure("Your request was not found, please try again later");
-  //   } else if (statusCode >= 500) {
-  //     return ServerFailure("There's a problem with the server, please try again later");
-  //   } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-  //     return ServerFailure(errorMessage);
-  //   } else if (statusCode == 409) { // Conflict error, typically for duplicate entries
-  //     return ServerFailure("User already exists, please try with a different username or email");
-  //   } else {
-  //     return ServerFailure("There was an error, please try again");
-  //   }
-   }
+    //   if (statusCode == 404) {
+    //     return ServerFailure("Your request was not found, please try again later");
+    //   } else if (statusCode >= 500) {
+    //     return ServerFailure("There's a problem with the server, please try again later");
+    //   } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
+    //     return ServerFailure(errorMessage);
+    //   } else if (statusCode == 409) { // Conflict error, typically for duplicate entries
+    //     return ServerFailure("User already exists, please try with a different username or email");
+    //   } else {
+    //     return ServerFailure("There was an error, please try again");
+    //   }
+  }
 }
 
 class CacheFailure extends Failure {

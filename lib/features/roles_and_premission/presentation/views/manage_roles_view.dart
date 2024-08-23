@@ -3,20 +3,19 @@ import 'package:lms/features/roles_and_premission/presentation/views/widgets/man
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/manage_roles_view_body.dart';
 
 class ManageRolesView extends StatelessWidget {
-  const ManageRolesView({super.key});
-
+ ManageRolesView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(110), 
+        preferredSize: const Size.fromHeight(110),
         child: AppBar(
           leading: const SizedBox(),
           backgroundColor: const Color(0xfff0f4f7),
-          flexibleSpace: const  ManageRolesAppBarBody(),
+          flexibleSpace: ManageRolesAppBarBody(),
         ),
       ),
-      body:const ManageRolesViewBody(),
+      body:  ManageRolesViewBody(),
     );
   }
 }

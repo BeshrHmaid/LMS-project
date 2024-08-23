@@ -14,11 +14,11 @@ class UsersTableHeader extends StatelessWidget {
         children: [
           Expanded(
               flex: 2,
-              child: Text('Name',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
+              child:
+                  Text('Name', style: TextStyle(fontWeight: FontWeight.bold))),
           Expanded(
-              child: Text('Role',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
+              child:
+                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold))),
           Expanded(
               child: Text('Joined on',
                   style: TextStyle(fontWeight: FontWeight.bold))),

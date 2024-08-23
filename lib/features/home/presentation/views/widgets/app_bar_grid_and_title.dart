@@ -14,7 +14,10 @@ class AppBarGridIconAndTitle extends StatelessWidget {
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
-          icon: const Icon(Icons.apps,color: Colors.white,),
+          icon: const Icon(
+            Icons.apps,
+            color: Colors.white,
+          ),
         ),
         Text(
           'Microsoft 365 admin center',

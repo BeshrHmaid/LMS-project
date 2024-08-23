@@ -101,7 +101,7 @@ class LicenseRenewalBody extends StatelessWidget {
                 DataCell(SizedBox(
                     width: columnWidth + 10, child: Text(license.licenseType))),
                 DataCell(SizedBox(
-                    width: columnWidth-20,
+                    width: columnWidth - 20,
                     child: Text('\$${license.cost.toStringAsFixed(2)}'))),
                 DataCell(SizedBox(
                     width: columnWidth,
@@ -113,7 +113,7 @@ class LicenseRenewalBody extends StatelessWidget {
                         'N/A'))),
                 DataCell(
                   Container(
-                    width: columnWidth+0.4,
+                    width: columnWidth + 0.4,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color:
@@ -128,7 +128,7 @@ class LicenseRenewalBody extends StatelessWidget {
                 ),
                 DataCell(
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       GoRouter.of(context).push(AppRouter.kPaymentView);
                     },
                     child: Container(

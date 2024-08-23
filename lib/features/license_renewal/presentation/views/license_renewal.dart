@@ -7,7 +7,9 @@ class LicenseRenewal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor:const Color(0xfffef7ff),),
+      appBar: AppBar(
+        backgroundColor: const Color(0xfffef7ff),
+      ),
       body: const SafeArea(
         child: LicenseRenewalBody(),
       ),

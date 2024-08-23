@@ -1,8 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:lms/features/roles_and_premission/data/models/user_model.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/pop_up_menu_actions_button.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/users_table_filtering_row.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/users_table_header.dart';
+
+class User {
+  final String name ;
+  final String email;
+  final String role;
+  final String status;
+  final String invitedDate;
+  final int daysToExpire;
+  User({
+    required this.name,
+    required this.email,
+    required this.role,
+    required this.status,
+    required this.invitedDate,
+    required this.daysToExpire,
+  });
+}
+
 
 class RolesAndPermissionDashboardViewBody extends StatefulWidget {
   const RolesAndPermissionDashboardViewBody({super.key});
@@ -67,28 +85,27 @@ class _RolesAndPermissionDashboardViewBodyState
 
   Container displayUserRow(User user) {
     return Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: displayUserName(user),
-                  ),
-                  Expanded(child: Text(user.role)),
-                  Expanded(
-                    child: displayJoiningInformation(user),
-                  ),
-                  PopUpMenuActionsButton(
-                    onSelected: (value) {
-                      if (value == 'Remove') {
-                        _removeUser(user); // Remove the selected user
-                      }
-                    },
-                  ),
-                ],
-              ),
-            );
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: displayUserName(user),
+          ),
+          Expanded(child: Text(user.role)),
+          Expanded(
+            child: displayJoiningInformation(user),
+          ),
+          PopUpMenuActionsButton(
+            onSelected: (value) {
+              if (value == 'Remove') {
+                _removeUser(user); // Remove the selected user
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Column displayJoiningInformation(User user) {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lms/core/utils/styles.dart';
@@ -79,7 +78,8 @@ class CustomContainer extends StatelessWidget {
                 Expanded(
                   child: Text(
                     cardTitle!,
-                    style: Styles.textStyle16.copyWith(fontWeight: FontWeight.w700),
+                    style: Styles.textStyle16
+                        .copyWith(fontWeight: FontWeight.w700),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
