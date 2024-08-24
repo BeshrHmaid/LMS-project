@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 class PermissionCard extends StatelessWidget {
-  const PermissionCard({super.key});
-
+  const PermissionCard({super.key, required this.title, this.subTitle});
+  final String title;
+  final String? subTitle;
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
-        title: Text('permission 1'),
+        title: Text(title),
         onTap: () {
           
         },
-        subtitle: Text('descirption 1'),
+        subtitle: Text(subTitle ??''),
       ),
     );
   }

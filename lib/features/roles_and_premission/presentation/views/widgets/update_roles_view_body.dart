@@ -1,127 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lms/core/functions/show_snack_bar.dart';
 import 'package:lms/features/roles_and_premission/data/models/authority.dart';
+import 'package:lms/features/roles_and_premission/presentation/manager/permission_cubit/permission_cubit.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/roles_and_permission_dashboard_view.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/actions_container.dart';
+import 'package:lms/features/roles_and_premission/presentation/views/widgets/permission_card.dart';
 
 class UpdateRolesViewBody extends StatelessWidget {
   const UpdateRolesViewBody({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding:const EdgeInsets.only(left: 36.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RoleNameDropdown(
-              title: 'select role',
-              authorities: authorities,
-            ),
-           const SizedBox(height: 16.0),
-          const  Text(
-              'Permissions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          const  SizedBox(height: 16.0),
-         const   PermissionDropdown(
-              title: 'Manage Organization',
-            ),
-           const PermissionDropdown(
-              title: 'Manage Developer Settings',
-            ),
-           const PermissionDropdown(
-              title: 'Manage Counterparties',
-            ),
-           const PermissionDropdown(
-              title: 'Manage External Accounts',
-            ),
-           const PermissionDropdown(
-              title: 'Manage API Keys',
-            ),
-        const    PermissionDropdown(
-              title: 'Manage Ledgers',
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-          const  Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return BlocListener<PermissionCubit, PermissionState>(
+      listener: (context, state) {
+        if (state is GetPermissionStateSuccess) {
+          permissions = state.permissions;
+        } else if (state is PermissionStateFailure) {
+          showSnackBar(context, state.errorMessage, Colors.red);
+        }
+      },
+      child: BlocBuilder<PermissionCubit, PermissionState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 36.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                    width: 110,
-                    child: ActionsContainer(
-                      containerBgColor: Colors.green,
-                      containerIcon: Icon(Icons.save),
-                      containerText: 'save',
-                      txtColor: Colors.white,
-                    )),
-                SizedBox(
-                  width: 30,
+                RoleNameDropdown(
+                  title: 'Select Role',
+                  authorities: authorities,
                 ),
-                SizedBox(
-                    width: 110,
-                    child: ActionsContainer(
-                      containerBgColor: Colors.red,
-                      containerIcon: Icon(Icons.cancel),
-                      containerText: 'cancel',
-                      txtColor: Colors.white,
-                    )),
+                const SizedBox(height: 16.0),
+                const Text(
+                  'Permissions',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16.0),
+                Expanded(
+                  child: state is PermissionStateLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : permissions.isNotEmpty? ListView.builder(
+                          itemCount: permissions.length,
+                          itemBuilder: (context, index) {
+                            return PermissionCard(
+                              title: permissions[index].permission ?? '',
+                              subTitle: permissions[index]
+                                  .permissionDescription ?? '',
+                            
+                            );
+                          },
+                        ):const Center(child: Text('No Permissions were assigned to this role!'),)
+                ),
+                const SizedBox(height: 30),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        width: 110,
+                        child: ActionsContainer(
+                          containerBgColor: Colors.green,
+                          containerIcon: Icon(Icons.save),
+                          containerText: 'Save',
+                          txtColor: Colors.white,
+                        )),
+                    SizedBox(width: 30),
+                    SizedBox(
+                        width: 110,
+                        child: ActionsContainer(
+                          containerBgColor: Colors.red,
+                          containerIcon: Icon(Icons.cancel),
+                          containerText: 'Cancel',
+                          txtColor: Colors.white,
+                        )),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PermissionDropdown extends StatefulWidget {
-  final String title;
-
-  const PermissionDropdown({super.key, required this.title});
-
-  @override
-  _PermissionDropdownState createState() => _PermissionDropdownState();
-}
-
-class _PermissionDropdownState extends State<PermissionDropdown> {
-  String _selectedPermission = 'No Access';
-  final List<String> _permissions = [
-    'No Access',
-    'View Only Access',
-    'Manage and Edit Access'
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 200, // Adjust this width as needed
-            child: Text(widget.title),
-          ),
-          const SizedBox(width: 16.0),
-          SizedBox(
-            width: 300,
-            child: DropdownButton<String>(
-              isExpanded: true,
-              value: _selectedPermission,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedPermission = newValue!;
-                });
-              },
-              items: _permissions.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -131,19 +88,28 @@ class RoleNameDropdown extends StatefulWidget {
   final List<Authority> authorities;
   final String title;
 
-  const RoleNameDropdown({super.key, required this.authorities, required this.title});
+  const RoleNameDropdown({
+    super.key,
+    required this.authorities,
+    required this.title,
+  });
 
   @override
   _RoleNameDropdownState createState() => _RoleNameDropdownState();
 }
 
 class _RoleNameDropdownState extends State<RoleNameDropdown> {
-  late String _selectedRole;
+  late String selectedRole;
 
   @override
   void initState() {
     super.initState();
-    _selectedRole = widget.authorities[0].authority ?? '';
+    selectedRole = widget.authorities[0].authority ?? '';
+    
+    // Call getPermissions after the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PermissionCubit>().getPermissions(roleName: selectedRole);
+    });
   }
 
   @override
@@ -153,7 +119,7 @@ class _RoleNameDropdownState extends State<RoleNameDropdown> {
       child: Row(
         children: [
           SizedBox(
-            width: 200, // Adjust this width as needed
+            width: 200,
             child: Text(
               widget.title,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -164,13 +130,16 @@ class _RoleNameDropdownState extends State<RoleNameDropdown> {
             width: 300,
             child: DropdownButton<String>(
               isExpanded: true,
-              value: _selectedRole,
+              value: selectedRole,
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedRole = newValue!;
+                  selectedRole = newValue!;
                 });
+                // Trigger the getPermissions function with the updated role name
+                context.read<PermissionCubit>().getPermissions(roleName: selectedRole);
               },
-              items: widget.authorities.map<DropdownMenuItem<String>>((Authority value) {
+              items: widget.authorities
+                  .map<DropdownMenuItem<String>>((Authority value) {
                 return DropdownMenuItem<String>(
                   value: value.authority,
                   child: Text(value.authority ?? ''),
