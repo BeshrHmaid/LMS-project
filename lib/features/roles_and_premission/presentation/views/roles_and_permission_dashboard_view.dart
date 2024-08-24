@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lms/features/roles_and_premission/data/models/authority.dart';
+import 'package:lms/features/roles_and_premission/data/models/permission.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/app_bar_body.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/roles_and_premission_dashboard_view_body.dart';
  List<Authority> authorities=[];
+ List<Permission> permissions=[];
 class RolesAndPermissionDashboardView extends StatelessWidget {
   const RolesAndPermissionDashboardView({super.key});
 
