@@ -1,26 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lms/core/functions/show_snack_bar.dart';
+import 'package:lms/features/roles_and_premission/data/models/user_dto.dart';
+import 'package:lms/features/roles_and_premission/presentation/manager/user_cubit/user_dto_cubit.dart';
+import 'package:lms/features/roles_and_premission/presentation/views/roles_and_permission_dashboard_view.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/pop_up_menu_actions_button.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/users_table_filtering_row.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/users_table_header.dart';
-
-class User {
-  final String name ;
-  final String email;
-  final String role;
-  final String status;
-  final String invitedDate;
-  final int daysToExpire;
-  User({
-    required this.name,
-    required this.email,
-    required this.role,
-    required this.status,
-    required this.invitedDate,
-    required this.daysToExpire,
-  });
-}
-
 
 class RolesAndPermissionDashboardViewBody extends StatefulWidget {
   const RolesAndPermissionDashboardViewBody({super.key});
@@ -32,28 +19,7 @@ class RolesAndPermissionDashboardViewBody extends StatefulWidget {
 
 class _RolesAndPermissionDashboardViewBodyState
     extends State<RolesAndPermissionDashboardViewBody> {
-  // Define the users list as a state variable
-  List<User> users = [
-    User(
-      name: 'u1',
-      email: 'u1@emailaddressdomain.com',
-      role: 'role1',
-      status: 'PENDING',
-      invitedDate: 'Jul 4, 2022',
-      daysToExpire: 29,
-    ),
-    User(
-      name: 'u2',
-      email: 'u2@emailaddressdomain.com',
-      role: 'role2',
-      status: 'PENDING',
-      invitedDate: 'Jul 4, 2022',
-      daysToExpire: 29,
-    ),
-  ];
-
-  // Method to remove a user from the list
-  void _removeUser(User user) {
+  void _removeUser(UserDto user) {
     setState(() {
       users.remove(user);
     });
@@ -61,45 +27,88 @@ class _RolesAndPermissionDashboardViewBodyState
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // Filters Row
-          const UsersTableFilteringRow(),
-          // Data Row
-          const UsersTableHeader(),
-          // List of Users
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              User user = users[index];
-              return displayUserRow(user);
-            },
-          ),
-        ],
+    context.read<UserDtoCubit>().getUsers();
+
+    return BlocListener<UserDtoCubit, UserDtoState>(
+      listener: (context, state) {
+        if (state is FetchUserFailureState) {
+          showSnackBar(context, state.errorMessage, Colors.red);
+        } else if (state is FetchUserSuccessState) {
+          users = state.users;
+        }
+      },
+      child: BlocBuilder<UserDtoCubit, UserDtoState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              // Filters Row
+              const UsersTableFilteringRow(),
+              // Data Row
+              const UsersTableHeader(),
+              // List of Users
+              state is FetchUserLoadingState
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Expanded(
+                      // This ensures the ListView takes the remaining space
+                      child: ListView.builder(
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          UserDto user = users[index];
+                          return Column(
+                            children: [
+                              displayUserRow(user: user),
+                              const Divider(
+                                thickness: .5,
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  Container displayUserRow(User user) {
+  Container displayUserRow({required UserDto user}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start, // Align items to the top
         children: [
           Expanded(
-            flex: 2,
-            child: displayUserName(user),
+            child:
+                displayUserName(userName: user.username!, email: user.email!),
           ),
-          Expanded(child: Text(user.role)),
           Expanded(
-            child: displayJoiningInformation(user),
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: user.roles!
+                  .map(
+                    (role) => Container(
+                      constraints: BoxConstraints(maxWidth: 150),
+                      child: Text(
+                        role.trim(),
+                        style: const TextStyle(
+                          height: 1.5,
+                          fontFamily: 'Courier',
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
           PopUpMenuActionsButton(
             onSelected: (value) {
               if (value == 'Remove') {
-                _removeUser(user); // Remove the selected user
+                _removeUser(user);
               }
             },
           ),
@@ -108,18 +117,9 @@ class _RolesAndPermissionDashboardViewBodyState
     );
   }
 
-  Column displayJoiningInformation(User user) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Invited: ${user.invitedDate}'),
-        Text('Expires in ${user.daysToExpire} days'),
-      ],
-    );
-  }
-
-  Row displayUserName(User user) {
+  Row displayUserName({required String userName, required String email}) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
           backgroundColor: Colors.blue[100],
@@ -129,9 +129,8 @@ class _RolesAndPermissionDashboardViewBodyState
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(user.name,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            Text(user.email),
+            Text(userName, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(email),
           ],
         ),
       ],

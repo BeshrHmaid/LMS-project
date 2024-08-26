@@ -9,8 +9,8 @@ class GetPermissionUseCase {
   GetPermissionUseCase({
     required this.permissionRepository,
   });
-  
-  Future<Either<Failure, List<Permission>>> call({String ? roleName}) async {
+
+  Future<Either<Failure, List<Permission>>> call({String? roleName}) async {
     return await permissionRepository.getPermissions(roleName: roleName);
   }
 }

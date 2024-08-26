@@ -3,7 +3,7 @@ import 'package:lms/features/roles_and_premission/presentation/views/widgets/man
 import 'package:lms/features/roles_and_premission/presentation/views/widgets/manage_roles_view_body.dart';
 
 class ManageRolesView extends StatelessWidget {
- ManageRolesView({super.key});
+  ManageRolesView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +15,7 @@ class ManageRolesView extends StatelessWidget {
           flexibleSpace: ManageRolesAppBarBody(),
         ),
       ),
-      body:  ManageRolesViewBody(),
+      body: ManageRolesViewBody(),
     );
   }
 }

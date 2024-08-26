@@ -7,11 +7,12 @@ import 'package:meta/meta.dart';
 part 'permission_state.dart';
 
 class PermissionCubit extends Cubit<PermissionState> {
-  PermissionCubit(this.addPermissionUseCase, this.getPermissionUseCase) : super(PermissionInitial());
+  PermissionCubit(this.addPermissionUseCase, this.getPermissionUseCase)
+      : super(PermissionInitial());
   final AddPermissionUseCase addPermissionUseCase;
   final GetPermissionUseCase getPermissionUseCase;
-  
-  Future<void> addPermission(List<Permission>permissions) async {
+
+  Future<void> addPermission(List<Permission> permissions) async {
     emit(PermissionStateLoading());
     var result = await addPermissionUseCase.call(permissions: permissions);
     result.fold(
@@ -32,9 +33,12 @@ class PermissionCubit extends Cubit<PermissionState> {
         emit(PermissionStateFailure(errorMessage: failure.message));
       },
       (permissions) {
-        emit(GetPermissionStateSuccess(permissions: permissions));
+        if (roleName == null) {
+          emit(GetAllPermissionStateSuccess(permissions: permissions));
+        } else {
+          emit(GetPermissionStateSuccess(permissions: permissions));
+        }
       },
     );
   }
-
 }

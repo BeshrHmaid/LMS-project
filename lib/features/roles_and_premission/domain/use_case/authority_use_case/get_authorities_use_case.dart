@@ -9,8 +9,8 @@ class GetAuthoritiesUseCase {
   GetAuthoritiesUseCase({
     required this.authorityRepository,
   });
-  
-  Future<Either<Failure, List<Authority>>> call() async {
-    return await authorityRepository.getAuthorities();
+
+  Future<Either<Failure, List<Authority>>> call({int ? authorityId=0}) async {
+    return await authorityRepository.getAuthorities(authorityId: authorityId);
   }
 }

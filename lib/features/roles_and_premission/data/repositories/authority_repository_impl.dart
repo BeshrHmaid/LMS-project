@@ -13,9 +13,9 @@ class AuthorityRepositoryImpl extends AuthorityRepository {
     required this.authorityRemoteDataSource,
   });
 
-
   @override
-  Future<Either<Failure, Unit>> addAuthorities(List<Authority> authorities) async {
+  Future<Either<Failure, Unit>> addAuthorities(
+      List<Authority> authorities) async {
     try {
       await authorityRemoteDataSource.addAuthorities(authorities);
       return right(unit); // Return Unit from dartz
@@ -29,9 +29,10 @@ class AuthorityRepositoryImpl extends AuthorityRepository {
   }
 
   @override
-  Future<Either<Failure, List<Authority>>> getAuthorities() async{
+  Future<Either<Failure, List<Authority>>> getAuthorities({int ? authorityId=0}) async {
     try {
-      List<Authority>authorities= await authorityRemoteDataSource.getAuthorities();
+      List<Authority> authorities =
+          await authorityRemoteDataSource.getAuthorities(authorityId: authorityId);
       return right(authorities); // Return Unit from dartz
     } catch (e) {
       print("Error in registerUser: $e"); // Logging the error
@@ -41,4 +42,20 @@ class AuthorityRepositoryImpl extends AuthorityRepository {
       return left(ServerFailure(e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, Unit>> updateAuthorityPermissions({required authorityId, required List newAuthorities})async {
+    try {
+      await authorityRemoteDataSource.updateAuthorityPermissions(authorityId: authorityId,newAuthorities: newAuthorities);
+      return right(unit); // Return Unit from dartz
+    } catch (e) {
+      print("Error in registerUser: $e"); // Logging the error
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+  
+  
 }

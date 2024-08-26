@@ -141,7 +141,7 @@ class CustomExpandedDrawer extends StatelessWidget {
                     // Navigate to Copilot
                   },
                 ),
-                userRole == 'ROLE_ADMIN'
+                userRole.contains('ROLE_ADMIN') 
                     ? ListTile(
                         title: Row(
                           children: [
@@ -253,7 +253,7 @@ class CustomCollapsedDrawer extends StatelessWidget {
                     // Navigate to Market Place
                   },
                 ),
-                userRole == 'ROLE_ADMIN'
+                userRole.contains('ROLE_ADMIN') 
                     ? ListTile(
                         title: Image.asset(AssetsData.rolesIcon),
                         onTap: () {

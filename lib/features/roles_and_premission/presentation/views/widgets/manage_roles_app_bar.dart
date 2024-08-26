@@ -7,7 +7,7 @@ import 'package:lms/features/roles_and_premission/presentation/views/widgets/act
 
 class ManageRolesAppBarBody extends StatelessWidget {
   const ManageRolesAppBarBody({
-    super.key, 
+    super.key,
   });
   @override
   Widget build(BuildContext context) {

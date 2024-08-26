@@ -5,7 +5,7 @@ import 'package:lms/features/auth/data/data_sources/auth_remote_data_source.dart
 import 'package:lms/features/roles_and_premission/data/models/permission.dart';
 
 abstract class PermissionRemoteDataSource {
-  Future<List<Permission>> getPermissions({ String ? roleName});
+  Future<List<Permission>> getPermissions({String? roleName});
   Future<void> addPermissions(List<Permission> authorities);
 }
 
@@ -23,13 +23,13 @@ class PermissionRemoteDataSourceImpl extends PermissionRemoteDataSource {
   }
 
   @override
-  Future<List<Permission>> getPermissions({ String ? roleName}) async {
+  Future<List<Permission>> getPermissions({String? roleName}) async {
     List<Permission> permissions = [];
     print(jwtToken);
     var result;
     if (roleName == null) {
       result = await api.get(endPoint: 'api/permissions', token: jwtToken);
-    } else{
+    } else {
       result = await api.get(
           endPoint: 'api/permissions/by-role/$roleName', token: jwtToken);
     }

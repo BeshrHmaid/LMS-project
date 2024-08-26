@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lms/core/functions/show_snack_bar.dart';
+import 'package:lms/core/utils/app_router.dart';
+import 'package:lms/core/utils/styles.dart';
 import 'package:lms/features/roles_and_premission/presentation/manager/authoriy_cubit/authority_cubit.dart';
 import 'package:lms/features/roles_and_premission/presentation/views/roles_and_permission_dashboard_view.dart';
 
@@ -32,7 +35,7 @@ class ManageRolesViewBody extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               state is AuthorityStateLoading
-                  ?const Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : Expanded(
@@ -43,7 +46,18 @@ class ManageRolesViewBody extends StatelessWidget {
                           return Card(
                             margin: const EdgeInsets.symmetric(vertical: 4),
                             child: ListTile(
-                              title: Text(role.authority ?? ''),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(role.authority ?? ''),
+                                  InkWell(
+                                    onTap: () {
+                                      GoRouter.of(context).push(AppRouter.kUsersView , extra: role);
+                                    },
+                                    child: Text('view users',style: Styles.textStyle20.copyWith(color: Colors.blue),),
+                                  )
+                                ],
+                              ),
                               onTap: () {
                                 // Handle role tap
                               },

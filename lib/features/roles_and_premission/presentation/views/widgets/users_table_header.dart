@@ -11,17 +11,12 @@ class UsersTableHeader extends StatelessWidget {
       color: Colors.blue[50],
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-              flex: 2,
-              child:
-                  Text('Name', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              child:
-                  Text('Role', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              child: Text('Joined on',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
+          Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+          Spacer(),
+          Text('Role', style: TextStyle(fontWeight: FontWeight.bold)),
+          Spacer(),
         ],
       ),
     );

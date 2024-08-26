@@ -2,7 +2,9 @@ import 'package:lms/core/utils/api.dart';
 import 'package:lms/features/auth/data/models/user_model.dart';
 import 'package:lms/features/auth/presentation/manager/sign_in_cubit/sign_in_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-String jwtToken='';
+
+String jwtToken = '';
+
 abstract class AuthRemoteDataSource {
   Future<void> loginUser({String username, String password});
   Future<void> registerUser(
@@ -31,7 +33,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     userRole = result['roles'];
     print(userRole);
     // Save the JWT token using SharedPreferences
-    jwtToken=result['jwtToken'];
+    jwtToken = result['jwtToken'];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('jwtToken', result['jwtToken']);
   }

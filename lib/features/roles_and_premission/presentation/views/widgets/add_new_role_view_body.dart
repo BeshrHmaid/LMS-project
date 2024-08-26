@@ -79,13 +79,16 @@ class _AddNewRoleViewBodyState extends State<AddNewRoleViewBody> {
               if (state is AuthorityStateFailure) {
                 showSnackBar(context, state.errorMessage, Colors.red);
               } else if (state is AddAuthorityStateSuccess) {
-                showSnackBar(context, '${_roles.length} authorities added successfully', Colors.green);
+                showSnackBar(
+                    context,
+                    '${_roles.length} authorities added successfully',
+                    Colors.green);
               }
             },
             builder: (context, state) {
               return ElevatedButton(
                 onPressed: () async {
-                  for(Authority role in _roles){
+                  for (Authority role in _roles) {
                     print(role.authority);
                   }
                   await context.read<AuthorityCubit>().addAuthorities(_roles);

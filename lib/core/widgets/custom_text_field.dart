@@ -4,12 +4,17 @@ import 'package:lms/core/utils/styles.dart';
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
   CustomTextField(
-      {super.key, this.textFieldSize, this.hint, this.suffixIcons, this.label, this.errorText});
+      {super.key,
+      this.textFieldSize,
+      this.hint,
+      this.suffixIcons,
+      this.label,
+      this.errorText});
   String? label;
   String? hint;
   List<Widget>? suffixIcons;
   double? textFieldSize;
-  final String? errorText;  
+  final String? errorText;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,9 +22,8 @@ class CustomTextField extends StatelessWidget {
       child: SizedBox(
         width: textFieldSize ?? 400,
         child: TextField(
-          
           decoration: InputDecoration(
-            errorText: errorText,
+              errorText: errorText,
               suffixIcon: suffixIcons != null
                   ? Row(
                       mainAxisSize: MainAxisSize.min,
